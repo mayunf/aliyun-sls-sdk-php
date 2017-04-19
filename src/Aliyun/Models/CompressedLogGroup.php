@@ -4,6 +4,8 @@
  * All rights reserved
  */
 
+namespace Aliyun\SLS\Models;
+
 /**
  * CompressedLogGroup is compressed LogGroup,
  * LogGroup infomation please refer to LogGroup

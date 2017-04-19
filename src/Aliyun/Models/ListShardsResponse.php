@@ -5,7 +5,6 @@
  */
 
 namespace Aliyun\SLS\Models;
-require_once realpath(dirname(__FILE__) . '/Shard.php');
 
 /**
  * The response of the GetLog API from log service.

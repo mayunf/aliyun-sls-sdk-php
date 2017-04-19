@@ -12,6 +12,8 @@ use Aliyun\SLS\Models\GetLogsRequest;
 use Aliyun\SLS\Models\GetLogsResponse;
 use Aliyun\SLS\Models\ListShardsRequest;
 use Aliyun\SLS\Models\ListShardsResponse;
+use Aliyun\SLS\Models\PullLogsRequest;
+use Aliyun\SLS\Models\PullLogsResponse;
 use Aliyun\SLS\Models\PutLogsRequest;
 use Aliyun\SLS\Models\PutLogsResponse;
 use Aliyun\SLS\Request\RequestCore;
@@ -500,6 +502,36 @@ class Client {
         $resp = $ret[0];
         $header = $ret[1];
         return new GetLogsResponse ( $resp, $header );
+    }
+
+    /**
+     * Pull logs from Log service.
+     * Unsuccessful opertaion will cause an Exception.
+     *
+     * @param PullLogsRequest $request
+     * @return PullLogsResponse
+     */
+    public function pullLogs(PullLogsRequest $request) {
+        $headers = array ();
+        $headers['Accept'] = 'application/x-protobuf';
+        $headers['Accept-Encoding'] = 'deflate';
+
+        $params = array ();
+        $params['type'] = $request->getType();
+        $params['cursor'] = $request->getCursor();
+        $params['count'] = $request->getCount();
+
+        $logstore = $request->getLogstore () !== null ? $request->getLogstore () : '';
+        $project = $request->getProject () !== null ? $request->getProject () : '';
+        $shard = $request->getShard() !== null ? $request->getShard() : 0;
+        $resource = "/logstores/$logstore/shards/$shard";
+        list ( $resp, $header ) = $this->send ( "GET", $project, NULL, $resource, $params, $headers );
+
+        if (isset($header['x-log-compresstype']) && $header['x-log-compresstype'] == 'deflate') {
+            $resp = gzuncompress($resp);
+        }
+
+        return new PullLogsResponse($resp, $header);
     }
     
     

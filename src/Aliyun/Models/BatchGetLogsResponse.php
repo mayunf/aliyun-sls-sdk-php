@@ -5,8 +5,7 @@
  */
 
 namespace Aliyun\SLS\Models;
-require_once realpath ( dirname ( __FILE__ ) . '/../sls.proto.php' );
-require_once realpath ( dirname ( __FILE__ ) . '/../protocolbuffers.inc.php' );
+
 /**
  * The response of the GetLog API from log service.
  *
