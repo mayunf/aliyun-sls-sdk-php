@@ -1,0 +1,14 @@
+{
+  "name": "moolex/aliyun-sls-sdk-php",
+  "require": {
+    "php": ">=5.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Aliyun\\SLS\\": "src/Aliyun"
+    },
+    "files": [
+      "src/proto/sls.proto.php"
+    ]
+  }
+}
