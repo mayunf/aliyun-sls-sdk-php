@@ -150,6 +150,7 @@ class Client {
             $request->add_header ( $key, $value );
         $request->set_method ( $method );
         $request->set_useragent(self::USER_AGENT);
+        $request->set_timeout(60, 10);
         if ($method == "POST" || $method == "PUT")
             $request->set_body ( $body );
         $request->send_request ();

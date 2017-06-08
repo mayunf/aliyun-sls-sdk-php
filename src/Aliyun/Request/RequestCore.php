@@ -188,6 +188,16 @@ class RequestCore
      */
     const HTTP_HEAD = 'HEAD';
 
+    /**
+     * @var int
+     */
+    private $timeout_exec = 30;
+
+    /**
+     * @var int
+     */
+    private $timeout_conn = 5;
+
 
     /*%******************************************************************************************%*/
     // CONSTRUCTOR/DESTRUCTOR
@@ -353,6 +363,19 @@ class RequestCore
     {
         $this->curlopts = $curlopts;
         return $this;
+    }
+
+    /**
+     * @param float $exec
+     * @param float $conn
+     */
+    public function set_timeout($exec, $conn = null)
+    {
+        $this->timeout_exec = $exec;
+        if (is_numeric($conn))
+        {
+            $this->timeout_conn = $conn;
+        }
     }
 
     /**
@@ -613,8 +636,8 @@ class RequestCore
         curl_setopt($curl_handle, CURLOPT_MAXREDIRS, 5);
         curl_setopt($curl_handle, CURLOPT_HEADER, true);
         curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl_handle, CURLOPT_TIMEOUT, 5184000);
-        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
+        curl_setopt($curl_handle, CURLOPT_TIMEOUT, $this->timeout_exec);
+        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, $this->timeout_conn);
         curl_setopt($curl_handle, CURLOPT_NOSIGNAL, true);
         curl_setopt($curl_handle, CURLOPT_REFERER, $this->request_url);
         curl_setopt($curl_handle, CURLOPT_USERAGENT, $this->useragent);
