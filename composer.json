@@ -1,7 +1,9 @@
 {
   "name": "moolex/aliyun-sls-sdk-php",
   "require": {
-    "php": ">=5.2"
+    "php": ">=5.2",
+    "ext-json": "*",
+    "ext-zlib": "*"
   },
   "autoload": {
     "psr-4": {
